@@ -1,0 +1,70 @@
+hatml, 
+body{
+    padding:0;
+    margin:0;
+    background:rgb(0,0,0);
+    color:rgb(255,255,255);
+    font-size:16px;
+}
+
+body *{
+    position:relative;
+}
+
+header{
+    position:fixed;
+    top:0px;
+    left:0px;
+    height:40px;
+    width:100%;
+    box-shadow:0 0 15px rgba(0,0,0,.7);
+    background:rgb(50,50,50);
+}
+
+header > div,
+header > nav{
+    position:absolute;
+    top:0;
+}
+
+.logo{
+    width:100px;
+    height:100%;
+    left:0;
+}
+
+.onlineStatus{
+    width:40px;
+    height:100%;
+    right:0;
+}
+
+nav{
+    width:calc(100% - 150px);
+    height:100%;
+    text-align:right;
+    position:absolute;
+    left:100px;
+}
+
+nav > div{
+    display:inline-block;
+}
+
+footer{
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    height:25px;
+    width:100%;
+    background:rgb(20,20,20);
+}
+
+.content{
+    height:calc(100% - 65px);
+    width:100%;
+    position:absolute;
+    top:20px;
+    overflow:auto;
+}
+

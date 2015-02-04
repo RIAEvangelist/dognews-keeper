@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DigiNow Dognews viewer app</title>
+    <meta charset='UTF-8'>
+    <meta name='description' content='on and offline dognews viewer will store your previously viewed issues locally for when you are not connected to the internet.'>
+    <meta name='keywords' content='diginow dognews viewer app'>
+    
+    <link rel='stylesheet' href='css/app.css' />
+    
+    <script src='RIA/core/RIA.js' 
+            id='RIAJS'
+            type='application/ecmascript'
+            data-path='/',
+            data-timeout='1000'
+            data-method='GET'>
+    </script>
+    
+    <script src='js/dognews.js'></script>
+    
+</head>
+<body>
+    <header id='header'>
+        <div class='logo'>
+            
+        </div>
+        <nav>
+            <div id='saved'>
+                saved
+            </div>
+            <div id='saved'>
+                all
+            </div>
+        </nav>
+        <div id='onlineStatus' class='onlineStatus offline'>
+            off
+        </div>
+    </header>
+    <section id='content' class='content'>
+        <section id='viewer' class='viewer'>
+            
+        </section>
+        <h1 id='displayName'></h1>
+        <h3 id='companyName'></h3>
+        <a id='web' href='#web'></a>
+        <p><span id='documentCount'></span> Issues</p>
+        <p id='about'></p>
+        
+        <ul id='issues' class='issues'>
+            
+        </ul>
+    </section>
+    <footer id='footer'>
+        
+    </footer>
+</body>
+</html>
