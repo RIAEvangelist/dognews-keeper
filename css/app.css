@@ -5,10 +5,16 @@ body{
     background:rgb(0,0,0);
     color:rgb(255,255,255);
     font-size:16px;
+    font-family:'tenderness';
 }
 
 body *{
     position:relative;
+}
+
+@font-face {
+   font-family:'tenderness';
+   src:url('../fonts/Tenderness.otf');
 }
 
 header{
@@ -108,4 +114,34 @@ footer{
 
 .transparent{
     opacity:0;
+}
+
+.display-info-text {
+    text-align: center;
+    top: 15px;
+}
+
+.displayName {
+    font-size: 60px;
+}
+
+.companyName {
+    font-size: 30px;
+}
+
+.documentCount, .about {
+    font-size: 25px;
+}
+
+@media all and (max-width: 1024px){
+    .issues > li {
+        width: 33%;
+        float: left;
+    }
+}
+
+@media all and (max-width: 785px){
+    .issues > li {
+    width: 45%;
+    float: right;
 }
