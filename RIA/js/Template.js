@@ -1,3 +1,5 @@
+'use strict';
+
 function Template(){
     Object.defineProperties(
         this,
@@ -14,7 +16,8 @@ function Template(){
            i<keys.length;
            i++
         ){
-            var reg=new RegExp('\$\{'+keys[i]+'\}','g');
+            var reg=new RegExp('\\$\\{'+keys[i]+'\\}','g');
+            
             string=string.replace(
                 reg,
                 data[

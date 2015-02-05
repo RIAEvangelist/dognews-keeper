@@ -1,0 +1,30 @@
+{
+    "name"          : "Dognews Keeper",
+    "description"   : "Read dognews issues online and off. Very helpful when your at a show with no signal.",
+    "version"       : "0.0.0.1",
+    "main"          : "app://./index.html",
+    "keywords"      : [ "dognews", "dogshow" ],
+    "window"        : {
+        "width"     : 1024,
+        "height"    : 768,
+        "title"     : "Dognews Keeper",
+        "resizable" : true,
+        "toolbar"   : true,
+        "frame"     : true
+    },
+    "chromium-args" : "",
+    "webkit": {
+        "plugin": false,
+        "java" : false,
+        "page-cache" : false
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "maintainers": [
+        {
+            "name": "Brandon Nozaki Miller",
+            "email": "brandon@diginow.it"
+        }
+    ]
+}
