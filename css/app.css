@@ -78,17 +78,28 @@ footer{
 .issues > li{
     float: right;
     width: 25%;
-    text-align: center;
     cursor:pointer;
 }
 
 .issues img{
-    height:150px;
+    height:66px;
     transition: opacity 1s ease-in;
 }
 
+.issues img.cover{
+    height:200px;
+}
+
+.issues .preview{
+    position:absolute;
+    width:100px;
+    top:0;
+    left:151px;
+    line-height:12px;
+}
+
 .issues p{
-    
+    text-align: center;
 }
 
 .hidden{

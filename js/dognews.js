@@ -48,11 +48,19 @@ function populateIssues(e){
     
     for(var i=0; i<issues.length; i++){
         var issue=issues[i].content;
-        api.getPage(issue.publicationId,issue.revisionId,1,gotThumb,'medium');
+        api.getPage(issue.publicationId,issue.revisionId,1,gotThumb,'large');
+        api.getPage(issue.publicationId,issue.revisionId,2,gotThumb,'medium');
+        api.getPage(issue.publicationId,issue.revisionId,3,gotThumb,'medium');
+        api.getPage(issue.publicationId,issue.revisionId,4,gotThumb,'medium');
+        api.getPage(issue.publicationId,issue.revisionId,5,gotThumb,'medium');
+        api.getPage(issue.publicationId,issue.revisionId,6,gotThumb,'medium');
+        api.getPage(issue.publicationId,issue.revisionId,7,gotThumb,'medium');
         console.log(issue);
-        list+='<li><img class="transparent" id="'+
+        
+        //I know this is bad its just a hack until I modularize it
+        list+='<li id="'+
                 issue.publicationId+
-            '" src="data:jpeg;base64," /><p>'+
+            '"><img class="cover transparent" src="data:jpeg;base64," /><div class="preview"><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /></div><p>'+
                 issue.title+
             '</p></li>';
     }
@@ -61,8 +69,10 @@ function populateIssues(e){
 }
 
 function gotThumb(e){
-    var image=document.getElementById(e.issue);
+    var issue=document.getElementById(e.issue);
+    var image=issue.querySelectorAll('img')[e.page-1];
     image.src=e.image;
-    //TODO : store image 
+    
+    //TODO : store image, stop writing crap code...
     image.classList.remove('transparent');
 }
