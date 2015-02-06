@@ -9,7 +9,7 @@
         "height"    : 768,
         "title"     : "Dognews Keeper",
         "resizable" : true,
-        "toolbar"   : true,
+        "toolbar"   : false,
         "frame"     : true
     },
     "chromium-args" : "",
