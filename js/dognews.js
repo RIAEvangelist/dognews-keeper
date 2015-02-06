@@ -1,6 +1,6 @@
 'use strict';
 
-requires.js('NWJSInit','IssuuAPI','local');
+requires.js('NWJSInit','IssuuAPI','indexedDB');
 
 document.addEventListener(
     'DOMContentLoaded',
