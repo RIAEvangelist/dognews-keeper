@@ -66,13 +66,14 @@ function populateIssues(e){
         api.getPage(issue.publicationId,issue.revisionId,5,gotThumb,'medium');
         api.getPage(issue.publicationId,issue.revisionId,6,gotThumb,'medium');
         api.getPage(issue.publicationId,issue.revisionId,7,gotThumb,'medium');
-        console.log(issue);
         
         //TODO: I know this is bad its just a hack until I modularize it
         list+='<li id="'+
                 issue.publicationId+
             '" data-revision="'+
                 issue.revisionId+
+            '" data-pages="'+
+                issue.pageCount+
             '"><img class="cover transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><div class="preview"><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></div><p>'+
                 issue.title+
             '</p></li>';
@@ -92,10 +93,38 @@ function gotThumb(e){
 
 function showIssue(e){
     var issue=e.target;
+    var currentPage,
+        pageCount;
+    
     while(!issue.id){
         issue=issue.parentElement;
     }
-    api.getPage(issue.id,issue.dataset.revisionId,1,gotThumb);
-    api.getPage(issue.id,issue.dataset.revisionId,2,gotThumb);
-    api.getPage(issue.id,issue.dataset.revisionId,3,gotThumb);
+    var revision=issue.dataset.revision;
+    api.getPage(issue.id,revision,1,populatePages);
+    api.getPage(issue.id,revision,2,populatePages);
+    api.getPage(issue.id,revision,3,populatePages);
+    
+    currentPage=3;
+    pageCount=Number(issue.dataset.pages)+1;
+    for(var i=currentPage; i<pageCount; i++){
+
+        //comply with Issuu TOC dont do stuff faster than a human can normally click
+        setTimeout(
+            function(){
+                api.getPage(this.id,this.revision,this.page,this.callback);
+            }.bind(
+                {
+                    id:issue.id,
+                    revision:revision,
+                    page:i,
+                    callback:populatePages
+                }
+            ),
+            (Math.random()*100+400 >> 0)*(i-1)
+        );
+    }
+}
+
+function populatePages(page){
+    console.log(page);
 }

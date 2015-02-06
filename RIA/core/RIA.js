@@ -89,6 +89,12 @@ function Requires(){
                     if(this.status!=200){
                         throw('Requirement Error : Failed to load requirement '+this.requirementName+' -> '+this.status);
                     }
+                    
+                    
+                    //don't overload existing requirements
+                    if(window[this.requirementName]){
+                        return;
+                    }
                     var requirement=document.createElement('script');
                     requirement.setAttribute("type","application/javascript")
                     requirement.innerHTML=this.responseText;
