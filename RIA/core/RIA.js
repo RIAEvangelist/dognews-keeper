@@ -86,8 +86,11 @@ function Requires(){
             required.on(
                 'load',
                 function(response){
+                    if(this.status!=200){
+                        throw('Requirement Error : Failed to load requirement '+this.requirementName+' -> '+this.status);
+                    }
                     var requirement=document.createElement('script');
-                    requirement.setAttribute("type","text/ecmascript")
+                    requirement.setAttribute("type","application/javascript")
                     requirement.innerHTML=this.responseText;
                     this.requires._head.appendChild(requirement);
                     this.requires._requirements--;
@@ -101,7 +104,12 @@ function Requires(){
             required.on(
                 'error',
                 function(response){
-                    console.log('err')
+                    this.requires.events.emit(
+                        'Requirement Error',
+                        response
+                    );
+                    
+                    throw('Requirements Error : Network issue loading '+this.requirementName);
                 }
             );
 

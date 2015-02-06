@@ -1,6 +1,6 @@
 'use strict';
 
-requires.js('IssuuAPI');
+requires.js('NWJSInit','IssuuAPI','local');
 
 document.addEventListener(
     'DOMContentLoaded',
@@ -21,6 +21,10 @@ function initApp(){
         'allRequirementsLoaded',
         initApp
     );
+    
+    var nw=new NWJSInit(true);
+    
+    //TODO: cache info locally
     api=new IssuuAPI('DogNews');
     api.getInfo(fillInfo);
 }
@@ -46,7 +50,14 @@ function populateIssues(e){
     var issueList=document.querySelector('#issues');
     var list='';
     
+    issueList.addEventListener(
+        'click',
+        showIssue
+    );
+    
     for(var i=0; i<issues.length; i++){
+        
+        //TODO: cache info locally
         var issue=issues[i].content;
         api.getPage(issue.publicationId,issue.revisionId,1,gotThumb,'large');
         api.getPage(issue.publicationId,issue.revisionId,2,gotThumb,'medium');
@@ -57,10 +68,12 @@ function populateIssues(e){
         api.getPage(issue.publicationId,issue.revisionId,7,gotThumb,'medium');
         console.log(issue);
         
-        //I know this is bad its just a hack until I modularize it
+        //TODO: I know this is bad its just a hack until I modularize it
         list+='<li id="'+
                 issue.publicationId+
-            '"><img class="cover transparent" src="data:jpeg;base64," /><div class="preview"><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /><img class="transparent" src="data:jpeg;base64," /></div><p>'+
+            '" data-revision="'+
+                issue.revisionId+
+            '"><img class="cover transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><div class="preview"><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></div><p>'+
                 issue.title+
             '</p></li>';
     }
@@ -75,4 +88,14 @@ function gotThumb(e){
     
     //TODO : store image, stop writing crap code...
     image.classList.remove('transparent');
+}
+
+function showIssue(e){
+    var issue=e.target;
+    while(!issue.id){
+        issue=issue.parentElement;
+    }
+    api.getPage(issue.id,issue.dataset.revisionId,1,gotThumb);
+    api.getPage(issue.id,issue.dataset.revisionId,2,gotThumb);
+    api.getPage(issue.id,issue.dataset.revisionId,3,gotThumb);
 }
