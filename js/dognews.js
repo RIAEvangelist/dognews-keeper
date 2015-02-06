@@ -3,7 +3,7 @@
 requires.js('NWJSInit','IssuuAPI','indexedDB','HTMLTemplates');
 
 document.addEventListener(
-    'DOMContentLoaded',
+    'requirementLoaded',
     initApp
 );
 
@@ -12,15 +12,12 @@ var api,
     templates;
 
 function initApp(){
-    if(!requires.ready){
-        document.addEventListener(
-            'allRequirementsLoaded',
-            initApp
-        );
+    if(!requires.isDOMReady || !requires.ready){
         return;
     }
+    
     document.removeEventListener(
-        'allRequirementsLoaded',
+        'requirementLoaded',
         initApp
     );
     
@@ -34,19 +31,11 @@ function initApp(){
 }
 
 function fillInfo(e){
-    var usedKeys=['about','companyName','displayName','documentCount','web'];
     api.getIssues(12,populateIssues);
-    for(var i=0; i<usedKeys.length; i++){
-        var el=document.getElementById(usedKeys[i]);
-        var content=e.target.response.rsp._content.user[usedKeys[i]];
-        if(!el || !content){
-            continue;
-        }
-        el.innerHTML=content;
-        if(usedKeys[i]=='web'){
-            el.href='http://'+content;
-        }
-    }
+    document.querySelector('#displayInfo').innerHTML=templates.getString(
+        templates.data.magazineInfo,
+        e.target.response.rsp._content.user
+    );
 }
 
 function populateIssues(e){
@@ -71,25 +60,19 @@ function populateIssues(e){
         api.getPage(issue.publicationId,issue.revisionId,6,gotThumb,'medium');
         api.getPage(issue.publicationId,issue.revisionId,7,gotThumb,'medium');
         
-        //TODO: I know this is bad its just a hack until I modularize it
-        list+='<li id="'+
-                issue.publicationId+
-            '" data-revision="'+
-                issue.revisionId+
-            '" data-pages="'+
-                issue.pageCount+
-            '"><img class="cover transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><div class="preview"><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /><img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" /></div><p>'+
-                issue.title+
-            '</p></li>';
+        list+=templates.getString(
+            templates.data.issue,
+            issue
+        );
     }
     
     issueList.innerHTML=list;
 }
 
-function gotThumb(e){
-    var issue=document.getElementById(e.issue);
-    var image=issue.querySelectorAll('img')[e.page-1];
-    image.src=e.image;
+function gotThumb(thumb){
+    var issue=document.getElementById(thumb.issue);
+    var image=issue.querySelectorAll('img')[thumb.page-1];
+    image.src=thumb.image;
     
     //TODO : store image, stop writing crap code...
     image.classList.remove('transparent');
@@ -97,8 +80,10 @@ function gotThumb(e){
 
 function showIssue(e){
     var issue=e.target;
+    var viewer=document.querySelector('#viewer');
     var currentPage,
-        pageCount;
+        pageCount,
+        pages='';
     
     while(!issue.id){
         issue=issue.parentElement;
@@ -111,7 +96,7 @@ function showIssue(e){
     currentPage=3;
     pageCount=Number(issue.dataset.pages)+1;
     for(var i=currentPage; i<pageCount; i++){
-
+        pages+=templates.data.page;
         //comply with Issuu TOC dont do stuff faster than a human can normally click
         setTimeout(
             function(){
@@ -127,8 +112,12 @@ function showIssue(e){
             (Math.random()*100+400 >> 0)*(i-1)
         );
     }
+    viewer.innerHTML=pages;
 }
 
-function populatePages(page){
-    console.log(page);
+function populatePages(issue){
+    console.log(issue)
+    var page=document.querySelector('#viewer>img:nth-child('+issue.page+')');
+    page.src=issue.image;
+    page.classList.remove('transparent');
 }

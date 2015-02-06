@@ -2,7 +2,7 @@
     "name"          : "Dognews Keeper",
     "description"   : "Read dognews issues online and off. Very helpful when your at a show with no signal.",
     "version"       : "0.0.0.1",
-    "main"          : "index.html",
+    "main"          : "app://./index.html",
     "keywords"      : [ "dognews", "dogshow" ],
     "window"        : {
         "width"     : 1024,

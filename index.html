@@ -11,7 +11,7 @@
     <script src='RIA/core/RIA.js' 
             id='RIAJS'
             type='application/javascript'
-            data-path='/'
+            data-path='./'
             data-timeout='1000'
             data-method='GET'>
     </script>
@@ -40,12 +40,8 @@
         <section id='viewer' class='viewer'>
             
         </section>
-        <div class = "display-info-text">
-            <div id='displayName' class = "displayName"></div>
-            <div id='companyName' class = "companyName"></div>
-            <a id='web' href='#web'></a>
-            <p><span id='documentCount' class = "documentCount"></span> Issues</p>
-            <p id='about' class = "about"></p>
+        <div id='displayInfo' class = "display-info-text">
+            
         </div>
         <ul id='issues' class='issues'>
             
@@ -54,22 +50,34 @@
     <footer id='footer'>
         
     </footer>
+    
+    <!-- TEMPLATES -->
+    
+    <template id='magazineInfo-template'>
+        <div id='displayName' class = "displayName">${displayName}</div>
+        <div id='companyName' class = "companyName">${companyName}</div>
+        <a id='web' href='http://${web}'>${web}</a>
+        <p><span id='documentCount' class = "documentCount">${documentCount}</span> Issues</p>
+        <p id='about' class = "about">${about}</p>
+    </template>
+    
     <template id='issue-template'>
-        <li id="${issueID}" data-revision="${revisionID}" data-pages="${pageCount}">
-            <img class="cover" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+        <li id="${publicationId}" data-revision="${revisionId}" data-pages="${pageCount}">
+            <img class="cover transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
             <div class="preview">
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
-                <img class="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img class="transparent" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
             </div>
             <p>${title}</p>
         </li>
     </template>
+    
     <template id='page-template'>
-        <img class='page' src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='>
+        <img class='page transparent' src='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='>
     </template>
 </body>
 </html>

@@ -10,6 +10,10 @@ function Requires(){
                 value:false,
                 writable:true
             },
+            isDOMReady:{
+                value:false,
+                writable:true
+            },
             js:{
                 value:requireJS,
                 enumerable:true
@@ -45,10 +49,18 @@ function Requires(){
             },
             _test:{
                 value:testReady
-            }
+            },
+            _DOMReady:{
+                value:DOMReady
+            },
         }
     );
-
+    
+    document.addEventListener(
+        'DOMContentLoaded',
+        this._DOMReady.bind(this)
+    );
+    
     if(!this._config.path){
         this._config.path='/';
     }
@@ -64,10 +76,11 @@ function Requires(){
     document.addEventListener(
         'requirementLoaded',
         this._test.bind(this)
-    )
+    );
     
     function requireJS(){
         var requirements=arguments;
+        this.ready=false;
         for(var i=0; i<requirements.length; i++){
             if(window[requirements[i]]){
                 continue;
@@ -84,25 +97,46 @@ function Requires(){
             required.xhr.requirementName=requirements[i];
             
             required.on(
+                'progress',
+                function(response){
+                    //don't overload existing requirements abort if found
+                    if(!window[this.requirementName]){
+                        return;
+                    }
+                    
+                    this.abort();
+                    this.requires._requirements--;
+                    this.requires.events.emit(
+                        'requirementLoaded',
+                        this.requirementName
+                    );
+                }
+            );
+            
+            required.on(
                 'load',
                 function(response){
                     if(this.status!=200){
                         throw('Requirement Error : Failed to load requirement '+this.requirementName+' -> '+this.status);
                     }
                     
+                    this.requires._requirements--;
                     
                     //don't overload existing requirements
                     if(window[this.requirementName]){
+                        this.requires.events.emit(
+                            'requirementLoaded',
+                            this.requirementName
+                        );
                         return;
                     }
                     var requirement=document.createElement('script');
                     requirement.setAttribute("type","application/javascript")
                     requirement.innerHTML=this.responseText;
                     this.requires._head.appendChild(requirement);
-                    this.requires._requirements--;
                     this.requires.events.emit(
                         'requirementLoaded',
-                        response
+                        this.requirementName
                     );
                 }
             );
@@ -131,18 +165,30 @@ function Requires(){
     }
     
     function testReady(){
-        this.ready=false;
-        if(this._requirements>0){
-            return;
-        }
-        this.ready=true;
-        this.events.emit(
-            'allRequirementsLoaded'
-        );
+        setTimeout(
+            function(){
+                if(this._requirements>0){
+                    return;
+                }
+                this.ready=true;
+                this.events.emit(
+                    'requirementLoaded',
+                    'requires:all'
+                );
+            }.bind(this),
+            10
+        )
+    }
+    
+    function DOMReady(e){
+        this.isDOMReady=true;
     }
     
     function requireHTML(){
+        
+        //TODO : Load HTML Modules
         var requirements=arguments;
+        this.ready=false;
         for(var i=0; i<arguments.length; i++){
             if(this._data.HTML[i]){
                 return;
@@ -153,6 +199,8 @@ function Requires(){
     }
 
     function requireCSS(){
+        
+        //TODO : Load CSS Modules
         var requirements=arguments;
         for(var i=0; i<arguments.length; i++){
             if(this._data.HTML[i]){

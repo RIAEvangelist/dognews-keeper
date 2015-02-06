@@ -101,11 +101,23 @@ footer{
     width:100px;
     top:0;
     left:151px;
-    line-height:12px;
+    line-height:9px;
+    letter-spacing: -4px;
 }
 
 .issues p{
     text-align: center;
+}
+
+.page{
+    display:inline-block;
+    width:49%;
+    transition: opacity 1s ease-in;
+}
+
+.viewer > img:first-child{
+    width:50%;
+    margin:40px 24%;
 }
 
 .hidden{

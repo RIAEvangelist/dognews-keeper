@@ -1,6 +1,6 @@
 'use strict';
 
-requires('Template','XHR2');
+requires.js('Template','XHR2');
 
 function HTMLTemplates(){
     Object.defineProperty(
@@ -18,8 +18,12 @@ function HTMLTemplates(){
                 value:findTemplates,
                 enumerable:true
             },
-            fill:{
+            getString:{
                 value:this._template.fill,
+                enumerable:true
+            },
+            getHTML:{
+                value:fillAsHTML,
                 enumerable:true
             },
             createFromHTML:{
@@ -41,6 +45,12 @@ function HTMLTemplates(){
             }
         }
     );
+    
+    function fillAsHTML(template, data){
+        
+        //TODO: flesh out this fill and return HTML
+        var content=this._template.fill(template, data);
+    }
     
     function getExternal(templateID,type,callback){
         
@@ -118,7 +128,7 @@ function HTMLTemplates(){
         
         for(var i=0; i<templates.length; i++){
             var template=templates[i];
-            this.data[template.id]=template.innerHTML;
+            this.data[template.id.replace('-template','')]=template.innerHTML;
         }
         
         return this.data;
