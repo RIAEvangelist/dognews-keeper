@@ -2,7 +2,7 @@
 
 requires('Template','XHR2');
 
-function HTMLTemplate(){
+function HTMLTemplates(){
     Object.defineProperty(
         this,
         '_template',
@@ -19,7 +19,7 @@ function HTMLTemplate(){
                 enumerable:true
             },
             fill:{
-                value:template.fill,
+                value:this._template.fill,
                 enumerable:true
             },
             createFromHTML:{
@@ -42,8 +42,26 @@ function HTMLTemplate(){
         }
     );
     
-    function getExternal(path){
-        //TODO: implement fetching templates
+    function getExternal(templateID,type,callback){
+        
+        //TODO: finish implementing fetching templates
+        if(!type){
+            type='GET';
+        }
+        var templateData=new XHR2(requires._config.path+'RIA/templates/'+templateID+'.js',type);
+        templateData.on(
+            'load',
+            function(response){
+                //TODO: use template data
+            }
+        );
+        templateData.on(
+            'error',
+            function(response){
+                //TODO: handle network error
+            }
+        );
+        //templateData.fetch();
     }
     
     function createTemplateString(string,templateID){
@@ -92,13 +110,15 @@ function HTMLTemplate(){
         
         templates=document.querySelectorAll(selector);
         
+        console.log(selector,templates);
+        
         if(!templates){
             return false;
         }
         
         for(var i=0; i<templates.length; i++){
             var template=templates[i];
-            this.data[template.id]=template[i].innerHTML;
+            this.data[template.id]=template.innerHTML;
         }
         
         return this.data;

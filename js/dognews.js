@@ -1,13 +1,15 @@
 'use strict';
 
-requires.js('NWJSInit','IssuuAPI','indexedDB');
+requires.js('NWJSInit','IssuuAPI','indexedDB','HTMLTemplates');
 
 document.addEventListener(
     'DOMContentLoaded',
     initApp
 );
 
-var api;
+var api,
+    nw,
+    templates;
 
 function initApp(){
     if(!requires.ready){
@@ -22,7 +24,9 @@ function initApp(){
         initApp
     );
     
-    var nw=new NWJSInit(true);
+    nw=new NWJSInit(true);
+    templates=new HTMLTemplates();
+    templates.find();
     
     //TODO: cache info locally
     api=new IssuuAPI('DogNews');
