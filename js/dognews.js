@@ -1,6 +1,6 @@
 'use strict';
 
-requires.js('NWJSInit','IssuuAPI','indexedDB','HTMLTemplates');
+requires.js('NWJSInit','IssuuAPI','HTMLTemplates');
 
 document.addEventListener(
     'requirementLoaded',
@@ -81,9 +81,12 @@ function gotThumb(thumb){
 function showIssue(e){
     var issue=e.target;
     var viewer=document.querySelector('#viewer');
+    var viewContainer = document.getElementById('viewerContainer');
     var currentPage,
         pageCount,
         pages='';
+    
+    viewer.innerHTML='';
     
     while(!issue.id){
         issue=issue.parentElement;
@@ -112,11 +115,14 @@ function showIssue(e){
             (Math.random()*100+400 >> 0)*(i-1)
         );
     }
+    viewer.style.width = 'calc(100% * '+(issue.dataset.pages +1) / 2+')';
     viewer.innerHTML=pages;
+    viewContainer.classList.remove('hidden');
+    
 }
 
 function populatePages(issue){
-    console.log(issue)
+    console.log(issue);
     var page=document.querySelector('#viewer>img:nth-child('+issue.page+')');
     page.src=issue.image;
     page.classList.remove('transparent');
