@@ -41,11 +41,18 @@ function fillInfo(e){
 function populateIssues(e){
     var issues=e.target.response.rsp._content.stream;
     var issueList=document.querySelector('#issues');
+    var exit = document.getElementById('exit-issue');
+    
     var list='';
     
     issueList.addEventListener(
         'click',
         showIssue
+    );
+    
+    exit.addEventListener(
+        'click',
+        exitIssue
     );
     
     for(var i=0; i<issues.length; i++){
@@ -69,6 +76,19 @@ function populateIssues(e){
     issueList.innerHTML=list;
 }
 
+function exitIssue(e) {
+    var hideExit = document.getElementById('exit-issue');
+    hideExit.classList.add('hidden');
+    
+    var content = document.getElementById('content');
+    content.classList.remove('hidden');
+    
+    var viewerCon = document.getElementById('viewerContainer');
+    viewerCon.scrollLeft = 0;
+    viewerCon.classList.add('hidden');
+
+}
+
 function gotThumb(thumb){
     var issue=document.getElementById(thumb.issue);
     var image=issue.querySelectorAll('img')[thumb.page-1];
@@ -81,6 +101,8 @@ function gotThumb(thumb){
 function showIssue(e){
     var issue=e.target;
     var viewer=document.querySelector('#viewer');
+    var showExit = document.getElementById('exit-issue');
+    var content = document.getElementById('content');
     var viewContainer = document.getElementById('viewerContainer');
     var currentPage,
         pageCount,
@@ -118,7 +140,8 @@ function showIssue(e){
     viewer.style.width = 'calc(100% * '+(issue.dataset.pages +1) / 2+')';
     viewer.innerHTML=pages;
     viewContainer.classList.remove('hidden');
-    
+    content.classList.add('hidden');
+    showExit.classList.remove('hidden');
 }
 
 function populatePages(issue){
