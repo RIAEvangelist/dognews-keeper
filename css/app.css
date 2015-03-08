@@ -72,7 +72,8 @@ footer{
     width:100%;
     position:absolute;
     top:38px;
-    overflow:auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .issues{
@@ -145,8 +146,7 @@ footer{
 }
 
 .viewer {
-    height: 100%;
-    
+    height: 100%;   
 }
 
 .viewerContainer {
@@ -157,8 +157,31 @@ footer{
     left:0;
     z-index:20000;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     background-color: rgb(0,0,0);
     transform: translateZ(0);
+}
+
+.exit-issue {
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    top: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(0, 139, 255, 0.6);
+    right: 25px;
+    box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8);
+    z-index: 100000;
+}
+
+.exit {
+    margin: 0;
+    left: 15px;
+    top: 8px;
+    font-size: 35px;
+    color: white;
+    font-weight: bold;
 }
 
 @media all and (max-width: 1024px){
@@ -173,6 +196,20 @@ footer{
     width: 45%;
     float: right;
     }
+    
+    .exit-issue {
+        height: 100px;
+        width: 100px;
+        border-radius: 10px;
+        right: 0;
+    }
+
+    .exit {
+        margin: 0;
+        left: 32px;
+        top: 17px;
+        font-size: 60px;
+    }
 }
 
 @media all and (max-width: 400px){
@@ -180,6 +217,20 @@ footer{
     .issues > li {
         width: 65%;
         float: left;  
-        left: calc(100% - 320px);
+        left: calc(100% - 280px);
+    }
+    
+    .exit-issue {
+        height: 50px;
+        width: 50px;
+        border-radius: 10px;
+        right: 0;
+    }
+    
+    .exit {
+        margin: 0;
+        left: 15px;
+        top: 8px;
+        font-size: 35px;
     }
 }
