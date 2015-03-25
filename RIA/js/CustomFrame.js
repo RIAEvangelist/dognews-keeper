@@ -19,7 +19,7 @@ function CustomFrame(){
                     unMaximize:{
                         value:setUnMaximize,
                         enumerable:true
-                    }
+                    },
                     minimize:{
                         value:setMinimize,
                         enumerable:true

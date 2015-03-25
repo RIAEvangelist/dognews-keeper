@@ -13,7 +13,7 @@ function XHR2(url, type, responseType, timeout){
         }
     );
 
-    if(!url || typeof url != 'string'){
+    if(!url || typeof url !== 'string'){
         throw('XHR2 class requires url as first paramater')
     }
 
