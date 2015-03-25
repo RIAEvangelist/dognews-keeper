@@ -88,6 +88,10 @@ footer{
     cursor:pointer;
 }
 
+.issues > li:hover{
+    opacity:0.7;
+}
+
 .issues img{
     height:66px;
     transition: opacity 1s ease-in;

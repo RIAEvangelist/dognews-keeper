@@ -15,7 +15,7 @@ function initApp(){
     if(!requires.isDOMReady || !requires.ready){
         return;
     }
-    
+   
     document.removeEventListener(
         'requirementLoaded',
         initApp
@@ -77,11 +77,11 @@ function populateIssues(e){
 }
 
 function exitIssue(e) {
-    var hideExit = document.getElementById('exit-issue');
-    hideExit.classList.add('hidden');
-    
     var content = document.getElementById('content');
     content.classList.remove('hidden');
+    
+    var hideExit = document.getElementById('exit-issue');
+    hideExit.classList.add('hidden');
     
     var viewerCon = document.getElementById('viewerContainer');
     viewerCon.scrollLeft = 0;
@@ -104,6 +104,7 @@ function showIssue(e){
     var showExit = document.getElementById('exit-issue');
     var content = document.getElementById('content');
     var viewContainer = document.getElementById('viewerContainer');
+       
     var currentPage,
         pageCount,
         pages='';
