@@ -50,7 +50,7 @@ function IssuuAPI(user){
     function fetchIssues(count,callback){
         var data={
             count:count
-        }
+        };
         
         var issues=new XHR2(
             this._URL.fill(this._issuesURL,data)
@@ -69,7 +69,8 @@ function IssuuAPI(user){
             revision:revisionID,
             page:page,
             size:size
-        }        
+        };
+        
         var page;
         
         if(!size){

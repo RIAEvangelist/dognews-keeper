@@ -294,4 +294,12 @@ function RIAEvents(){
         
         document.dispatchEvent(event);
     }
+    
+    function goHome() {
+        var a = document.getElementById('homeButton');
+        a.addEventListener('click', function(){
+           alert('You clicked the home button');
+           }
+        );
+    }
 }

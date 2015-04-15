@@ -1,0 +1,29 @@
+{
+    "name": "dogNews-app",
+    "description": "A Sample Chrome App",
+    "manifest_version": 2,
+    "minimum_chrome_version": "23",
+    "version": "0.1.1",
+    "offline_enabled": true,
+    "icons": {
+        "16": "res/icon/Icon.png",
+        "36": "res/icon/icon-36-ldpi.png",
+        "48": "res/icon/icon-48-mdpi.png",
+        "57": "res/icon/Icon.png",
+        "72": "res/icon/icon-72-hdpi.png",
+        "96": "res/icon/icon-96-xhdpi.png",
+        "114": "res/icon/icon114.png",
+        "128": "res/icon/icon128.png",
+        "144": "res/icon/icon144.png"
+    },
+    "app": {
+        "background": {
+            "scripts": [
+                "background.js"
+            ]
+        }
+    },
+    "permissions": [
+        "<all_urls>"
+    ]
+}
